@@ -1,15 +1,13 @@
-import { getFeaturedEvents } from "../dummy-data" 
-import EventList from "../components/events/event-list";
+import React from 'react'
+import { getFeaturedEvents, getAllEvents } from '../dummy-data'
+import EventList from '../components/events/event-list';
 
-function HomePage() {
+export default function HomePage() {
+  const featuredEvents = getAllEvents();
 
-const featuredEvents = getFeaturedEvents(); 
-
-    return (
+  return (
     <div>
-        <EventList items={featuredEvents} />
+      <EventList items={featuredEvents} />
     </div>
-    )
-  }
-  
-  export default HomePage
+  )
+}
