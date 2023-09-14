@@ -1,8 +1,7 @@
 import Head from 'next/head';
-
-import { getFeaturedEvents } from '../helpers/api-util';
+import { getFeaturedEvents } from '../components/helpers/api-util';
 import EventList from '../components/events/event-list';
-import NewsletterRegistration from '../components/input/newsletter-registration';
+import NewsletterRegistration from '../components/input/newlestter-registration';
 
 function HomePage(props) {
   return (
