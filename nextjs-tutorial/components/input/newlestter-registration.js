@@ -13,8 +13,12 @@ const emailInputRef = useRef();
     // send valid data to API
     fetch('/api/newsletter', {
       method: 'POST',
-      body: JSON.stringify({email: enteredEmail }) 
-    });
+      body: JSON.stringify({email: enteredEmail }), 
+      headers: {
+'Content-Type': 'application/json',
+      }
+    }).then(response => response.json())
+    .then((data) => console.log(data));
   }
 
   return (
