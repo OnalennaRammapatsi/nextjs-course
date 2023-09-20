@@ -1,24 +1,47 @@
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import classes from './newlestter-registration.module.css';
+import NotificationContext from '../../store/notification-context';
+
 
 function NewsletterRegistration() {
-const emailInputRef = useRef();
+  const emailInputRef = useRef();
+  const notificationCtx = useContext(NotificationContext);
+
 
   function registrationHandler(event) {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
+
+    notificationCtx.showNotification({
+      title: ' Signing up',
+      message: 'Newsletter registration',
+      status: 'Pending'
+    })
     // fetch user input (state or refs)
     // optional: validate input
     // send valid data to API
-    fetch('/api/newsletter', {
+    fetch('api/newsletter', {
       method: 'POST',
-      body: JSON.stringify({email: enteredEmail }), 
+      body: JSON.stringify({ email: enteredEmail }),
       headers: {
-'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       }
     }).then(response => response.json())
-    .then((data) => console.log(data));
+      .then((data) => {
+        notificationCtx.showNotification({
+        title: 'Success!',
+        message: 'Successfully registered the newsletter!',
+        status: 'succss'
+      })
+    })
+    .catch(error => {
+      notificationCtx.showNotification({
+        title: 'Error!',
+        message: error.message || 'Something went wrong!',
+        status: 'error'
+      })
+    })
   }
 
   return (
@@ -31,7 +54,7 @@ const emailInputRef = useRef();
             id='email'
             placeholder='Your email'
             aria-label='Your email'
-            ref = {emailInputRef}
+            ref={emailInputRef}
           />
           <button>Register</button>
         </div>
