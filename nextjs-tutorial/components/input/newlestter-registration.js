@@ -16,7 +16,7 @@ function NewsletterRegistration() {
     notificationCtx.showNotification({
       title: ' Signing up',
       message: 'Newsletter registration',
-      status: 'Pending'
+      status: 'pending'
     })
     // fetch user input (state or refs)
     // optional: validate input
@@ -27,12 +27,19 @@ function NewsletterRegistration() {
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(response => response.json())
+    }).then(response => {
+      if (response.ok){
+        return response.json();
+      }
+      return response.json().then(data => {
+        throw new Error(data.message  || 'Something went wrong!');
+      })
+    })
       .then((data) => {
         notificationCtx.showNotification({
         title: 'Success!',
         message: 'Successfully registered the newsletter!',
-        status: 'succss'
+        status: 'success'
       })
     })
     .catch(error => {
